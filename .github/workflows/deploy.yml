@@ -1,0 +1,40 @@
+name: Deploy Hugo Site
+
+on:
+  repository_dispatch:
+    types: [deploy]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Hugo site repo
+        uses: actions/checkout@v2
+
+      - name: Checkout Obsidian vault repo
+        uses: actions/checkout@v2
+        with:
+          repository: nicolemah99/obsidian
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: obsidian-vault
+
+      - name: Sync Obsidian content to Hugo site
+        run: |
+          rm -rf ./content/*
+          cp -r ./obsidian-vault/my-vault* ./content/
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+
+      - name: Build site
+        run: hugo --minify
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
