@@ -1,6 +1,9 @@
 name: Deploy Hugo Site
 
 on:
+  push:
+    branches:
+      - main
   repository_dispatch:
     types: [deploy]
 
@@ -15,14 +18,14 @@ jobs:
       - name: Checkout Obsidian vault repo
         uses: actions/checkout@v2
         with:
-          repository: <your-username>/obsidian-notes
+          repository: nicolemah99/obsidian
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           path: obsidian-vault
 
       - name: Sync Obsidian content to Hugo site
         run: |
           rm -rf ./content/*
-          cp -r ./obsidian-vault/* ./content/
+          cp -r ./obsidian-vault/my-vault/* ./content/
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
