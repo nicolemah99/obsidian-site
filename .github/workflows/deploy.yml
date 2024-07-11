@@ -3,7 +3,7 @@ name: Deploy Hugo Site
 on:
   push:
     branches:
-      - main
+      - '**'
   repository_dispatch:
     types: [deploy]
 
