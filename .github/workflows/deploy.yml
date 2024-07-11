@@ -1,28 +1,18 @@
-name: Deploy Hugo Site
+name: Deploy Hugo Site to GitHub Pages
 
 on:
-  repository_dispatch:
-    types: [deploy]
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Hugo site repo
+      - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Checkout Obsidian vault repo
-        uses: actions/checkout@v2
-        with:
-          repository: nicolemah99/obsidian
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          path: obsidian-vault
-
-      - name: Sync Obsidian content to Hugo site
-        run: |
-          rm -rf ./content/*
-          cp -r ./obsidian-vault/my-vault* ./content/
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -32,9 +22,11 @@ jobs:
       - name: Build site
         run: hugo --minify
 
+      - name: Create .nojekyll
+        run: echo > ./public/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_branch: gh-pages
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
