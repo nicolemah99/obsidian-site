@@ -27,7 +27,7 @@ defaults:
     shell: bash
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.128.0
@@ -93,7 +93,7 @@ jobs:
           path: ./public
 
   deploy:
-    needs: build-and-deploy
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
