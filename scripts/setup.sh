@@ -17,8 +17,8 @@ apply_template() {
   local template_content=$(<"$TEMPLATE")
 
   # Replace placeholders in the template content
-  template_content="${template_content//\{\{ .Title \}\}/$title}"
-  template_content="${template_content//\{\{ .Date \}\}/$CURRENT_DATE}"
+  template_content="${template_content//"{{ title }}"/$title}"
+  template_content="${template_content//"{{ date }}"/$CURRENT_DATE}"
 
   # Prepend the template to the file content
   echo -e "$template_content\n\n$content" > "$file"
