@@ -61,14 +61,14 @@ jobs:
           rm -rf ./content/*
           cp -r ./obsidian-vault/* ./content/
 
-      - name: Debug - List contents of content after copy
-        run: ls -R ./content
-
       - name: Make scripts executable
         run: chmod +x ./scripts/*.sh
 
       - name: Apply Hugo Archetypes
         run: ./scripts/setup.sh
+
+      - name: Debug - List contents of content after copy
+        run: ls -R ./content
 
       - name: Install Hugo CLI
         run: |
