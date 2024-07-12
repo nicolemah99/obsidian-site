@@ -54,7 +54,7 @@ jobs:
         run: ls -R ./obsidian-vault
 
       - name: Debug - List contents of content before copy
-        run: ls -R ./obsiditan-site
+        run: ls -R 
 
       - name: Sync Obsidian content to Hugo site
         run: |
