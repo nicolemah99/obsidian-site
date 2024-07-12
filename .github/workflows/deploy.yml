@@ -49,7 +49,7 @@ jobs:
       - name: Sync Obsidian content to Hugo site
         run: |
           rm -rf ./content/*
-          cp -r ./obsidian-vault/obsidian/* ./content/
+          cp -r ./obsidian-vault/* ./content/
 
       - name: Install Hugo CLI
         run: |
