@@ -7,15 +7,21 @@ TEMPLATE="./archetypes/default.md"
 # Function to apply the template
 apply_template() {
   local file="$1"
+  local title=$(basename "$file" .md)
   local content=$(<"$file")
 
   # Read the contents of the template
   local template_content=$(<"$TEMPLATE")
 
-  # Prepend the template content to the file content
-  echo -e "$template_content\n\n$content" > "$file"
+  # Replace placeholders in the template
+  local header="${template_content//"{{ replace .File.ContentBaseName "-" " " | title }}"/$title}"
+  header="${header//"{{ .Date }}"/$CURRENT_DATE}"
+
+  # Prepend the template to the file content
+  echo -e "$header\n\n$content" > "$file"
   echo "Prepended template content to $file"
 }
+
 
 # Find all markdown files and apply the template if no front matter exists
 find "$CONTENT_DIR" -type f -name "*.md" ! -path "$CONTENT_DIR/.obsidian/*" | while read -r file; do
