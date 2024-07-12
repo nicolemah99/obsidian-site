@@ -16,12 +16,12 @@ apply_template() {
   # Read the contents of the template
   local template_content=$(<"$TEMPLATE")
 
-  # Replace placeholders in the template
-  local header="${template_content//"{{ replace .File.ContentBaseName "-" " " | title }}"/$title}"
-  header="${header//"{{ .Date }}"/$CURRENT_DATE}"
+  # Replace placeholders in the template content
+  template_content="${template_content//\{\{ replace .File.ContentBaseName \"-\" \" \" \| title \}\}/$title}"
+  template_content="${template_content//\{\{ .Date \}\}/$CURRENT_DATE}"
 
   # Prepend the template to the file content
-  echo -e "$header\n\n$content" > "$file"
+  echo -e "$template_content\n\n$content" > "$file"
   echo "Prepended template content to $file"
 }
 
