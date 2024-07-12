@@ -37,13 +37,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          fetch-depth: 0
+          fetch-depth: 1
+
+      - name: Debug - List contents of Hugo site repo
+        run: ls -R .
 
       - name: Checkout remote vault repo
         uses: actions/checkout@v4
         with:
           repository: nicolemah99/obsidian
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: obsidian-vault
+          fetch-depth: 1
 
       - name: Debug - List contents of obsidian-vault
         run: ls -R ./obsidian-vault
