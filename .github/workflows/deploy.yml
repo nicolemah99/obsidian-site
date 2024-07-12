@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - '**'
+  commit:
+    branches:
+      - '**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -54,7 +57,7 @@ jobs:
         run: ls -R ./obsidian-vault
 
       - name: Debug - List contents of content before copy
-        run: ls -R ./content
+        run: ls -R ./obsiditan-site/content
 
       - name: Sync Obsidian content to Hugo site
         run: |
