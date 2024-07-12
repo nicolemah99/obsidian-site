@@ -4,23 +4,17 @@
 CONTENT_DIR="./content"
 TEMPLATE="./archetypes/default.md"
 
-# Current date in ISO 8601 format
-CURRENT_DATE=$(date -I)
-
 # Function to apply the template
 apply_template() {
   local file="$1"
-  local title=$(basename "$file" .md)
   local content=$(<"$file")
 
-  # Replace placeholders in the template
-  local header=$(<"$TEMPLATE")
-  header="${header//"{{ replace .File.ContentBaseName "-" " " | title }}"/$title}"
-  header="${header//"{{ .Date }}"/$CURRENT_DATE}"
+  # Read the contents of the template
+  local template_content=$(<"$TEMPLATE")
 
-  # Prepend the header to the content
-  echo -e "$header\n\n$content" > "$file"
-  echo "Added TOML header to $file"
+  # Prepend the template content to the file content
+  echo -e "$template_content\n\n$content" > "$file"
+  echo "Prepended template content to $file"
 }
 
 # Find all markdown files and apply the template if no front matter exists
@@ -34,7 +28,7 @@ done
 find "$CONTENT_DIR" -type d ! -path "$CONTENT_DIR/.obsidian*" | while read -r dir; do
   index_file="$dir/_index.md"
   if [ ! -f "$index_file" ]; then
-    echo "---\ntitle: \"$(basename "$dir")\"\n---" > "$index_file"
+    echo -e "+++\ntitle = \"$(basename "$dir")\"\ndate = \"$CURRENT_DATE\"\n+++" > "$index_file"
     echo "Created _index.md in $dir"
   fi
 done
