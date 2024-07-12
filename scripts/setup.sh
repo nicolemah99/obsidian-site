@@ -17,7 +17,7 @@ apply_template() {
   local template_content=$(<"$TEMPLATE")
 
   # Replace placeholders in the template content
-  template_content="${template_content//\{\{ replace .File.ContentBaseName \"-\" \" \" \| title \}\}/$title}"
+  template_content="${template_content//\{\{ .Title \}\}/$title}"
   template_content="${template_content//\{\{ .Date \}\}/$CURRENT_DATE}"
 
   # Prepend the template to the file content

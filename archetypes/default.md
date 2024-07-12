@@ -1,4 +1,4 @@
 +++
-title = '{{ replace .File.ContentBaseName "-" " " | title }}'
+title = {{ title }}
 date = {{ .Date }}
 +++
