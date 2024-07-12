@@ -46,10 +46,19 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           path: obsidian-vault
 
+      - name: Debug - List contents of obsidian-vault
+        run: ls -R ./obsidian-vault
+
+      - name: Debug - List contents of content before copy
+        run: ls -R ./content
+
       - name: Sync Obsidian content to Hugo site
         run: |
           rm -rf ./content/*
           cp -r ./obsidian-vault/* ./content/
+
+      - name: Debug - List contents of content after copy
+        run: ls -R ./content
 
       - name: Install Hugo CLI
         run: |
