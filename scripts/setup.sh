@@ -4,6 +4,9 @@
 CONTENT_DIR="./content"
 TEMPLATE="./archetypes/default.md"
 
+# Current date in ISO 8601 format
+CURRENT_DATE=$(date -I)
+
 # Function to apply the template
 apply_template() {
   local file="$1"
@@ -21,7 +24,6 @@ apply_template() {
   echo -e "$header\n\n$content" > "$file"
   echo "Prepended template content to $file"
 }
-
 
 # Find all markdown files and apply the template if no front matter exists
 find "$CONTENT_DIR" -type f -name "*.md" ! -path "$CONTENT_DIR/.obsidian/*" | while read -r file; do
