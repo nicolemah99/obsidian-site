@@ -44,7 +44,6 @@ jobs:
         with:
           repository: nicolemah99/obsidian
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          path: obsidian-vault
 
       - name: Debug - List contents of obsidian-vault
         run: ls -R ./obsidian-vault
